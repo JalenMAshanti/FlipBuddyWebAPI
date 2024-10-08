@@ -5,5 +5,7 @@
 		public const string Users = "users";
 
 		public const string Products = "products";
+
+		public const string Categories = "categories";
 	}
 }
