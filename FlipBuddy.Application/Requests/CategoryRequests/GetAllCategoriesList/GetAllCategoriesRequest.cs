@@ -2,5 +2,5 @@
 
 namespace FlipBuddy.Application.Requests.CategoryRequests.GetAllCategoriesList
 {
-	internal class GetAllCategoriesRequest : IRequestResponse<GetAllCategoriesResponse> { }
+	public class GetAllCategoriesRequest : IRequestResponse<GetAllCategoriesResponse> { }
 }
