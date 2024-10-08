@@ -22,14 +22,7 @@ namespace FlipBuddy.Application.Requests.LoginRequests
 					throw new DoesNotExistException(nameof(User), (request.Username, nameof(request.Username)));
 				}
 
-				var User_DTO = await _dataAccess.FetchAsync(new GetUserByGuid(UserGuid.Guid));
-
-				if (User_DTO == null) 
-				{
-					throw new OperationFailedException();
-				}
-
-				return new LoginByUsernameAndPasswordResponse(User_DTO.AsDomainUser());
+				return new LoginByUsernameAndPasswordResponse(UserGuid);
 			}
 			catch(DataAccessException ex) 
 			{
