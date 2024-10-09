@@ -20,9 +20,9 @@ namespace FlipBuddy.Application.Requests.UserRequests.Insert
 																				  request.Username,
 																				  request.FirstName,
 																				  request.LastName,
+																				  request.Password,
+																				  request.Password,
 																				  request.Email!,
-																				  request.Password,
-																				  request.Password,
 																				  0
 																				));
 				if (rowsAffected <= 0)
