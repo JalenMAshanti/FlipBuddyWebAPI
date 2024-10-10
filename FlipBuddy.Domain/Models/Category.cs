@@ -4,16 +4,16 @@
 	{
 		public  Category() { }
 
-		public Category(int categoryId,
+		public Category(int id,
 						string name,
 						string bio
 						) 
 		{
-			CategoryId = categoryId;
+			Id = id;
 			Name = name;
 			Bio = bio;	
 		}
-		public int CategoryId { get; set; }
+		public int Id { get; set; }
 		public string? Name { get; set; }
 		public string? Bio { get; set; }
 	}
