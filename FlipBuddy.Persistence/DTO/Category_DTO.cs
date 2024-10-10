@@ -7,6 +7,7 @@ namespace FlipBuddy.Persistence.DTO
 		public int Id { get; set; }
 		public string Name { get; set; }= string.Empty;
 		public string Bio { get; set; } = string.Empty;
-		public Category AsDomainCategory() => new(Id, Name, Bio);
+		public int ProductCount { get; set; }
+		public Category AsDomainCategory() => new(Id, Name, Bio, ProductCount);
 	}
 }
