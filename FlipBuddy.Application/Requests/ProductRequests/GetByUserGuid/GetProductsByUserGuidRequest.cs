@@ -1,7 +1,7 @@
 ﻿using FlipBuddy.Application.Abstraction;
 using FlipBuddy.Application.BaseObjects.BaseRequests;
 
-namespace FlipBuddy.Application.Requests.ProductRequests.Get
+namespace FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid
 {
 	public class GetProductsByUserGuidRequest : RequiredUserGuidRequest, IRequestResponse<GetProductsByUserGuidResponse>
 	{

@@ -1,5 +1,5 @@
 ﻿using FlipBuddy.Application.Abstraction;
-using FlipBuddy.Application.Requests.ProductRequests.Get;
+using FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid;
 using FlipBuddy.Application.Requests.ProductRequests.Insert;
 using FlipBuddy.Application.Requests.ProductRequests.Upload;
 using Microsoft.AspNetCore.Mvc;

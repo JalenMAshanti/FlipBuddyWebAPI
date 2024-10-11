@@ -1,12 +1,12 @@
 ﻿using FlipBuddy.Persistence.DTO;
 using FlippBuddy.Domain.Models;
 
-namespace FlipBuddy.Application.Requests.ProductRequests.Get
+namespace FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid
 {
 	public class GetProductsByUserGuidResponse
 	{
-		public GetProductsByUserGuidResponse(IEnumerable<Products_DTO> products) => Products = products;
+		public GetProductsByUserGuidResponse(IEnumerable<Product> products) => Products = products;
 
-		IEnumerable<Products_DTO> Products { get; set; }
+		public IEnumerable<Product> Products { get; set; }
 	}
 }

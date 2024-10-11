@@ -4,8 +4,9 @@ using FlipBuddy.Domain.Models;
 using FlipBuddy.Persistence.Abstractions;
 using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
+using FlippBuddy.Domain.Models;
 
-namespace FlipBuddy.Application.Requests.ProductRequests.Get
+namespace FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid
 {
 	internal class GetProductsByUserGuidHandler : DataRequestResponseHandler<GetProductsByUserGuidRequest, GetProductsByUserGuidResponse>
 	{
@@ -22,7 +23,12 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Get
 
 			var products = await _dataAccess.FetchListAsync(new GetProductsByUserGuid(request.UserGuid));
 
-			return new GetProductsByUserGuidResponse(products);
+			if (products.Any()) 
+			{
+				return new GetProductsByUserGuidResponse(products.Select(_ => _.AsDomainProduct()).ToList());
+			}
+
+			return new GetProductsByUserGuidResponse(Enumerable.Empty<Product>());
 		}
 	}
 }

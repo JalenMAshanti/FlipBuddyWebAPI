@@ -16,6 +16,7 @@ namespace FlipBuddy.Persistence.DTO
 		public string Currency { get; set; } = string.Empty;
 		public int ConditionId { get; set; }
 		public string BarCode {  get; set; } = string.Empty;
+
 		public Product AsDomainProduct() => new(Guid, UserGuid, Title, CategoryId, PurchasedPrice, SellPrice, Description, Quantity, Currency, ConditionId, BarCode);
 	}
 }
