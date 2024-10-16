@@ -7,5 +7,7 @@
 		public const string Products = "products";
 
 		public const string Categories = "categories";
+
+		public const string Conditions = "conditions";
 	}
 }
