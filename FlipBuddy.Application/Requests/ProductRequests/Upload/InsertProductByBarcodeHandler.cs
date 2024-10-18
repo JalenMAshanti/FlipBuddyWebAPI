@@ -1,5 +1,6 @@
 ﻿using FlipBuddy.Application.BaseObjects.BaseHandlers;
 using FlipBuddy.Application.Helpers;
+using FlipBuddy.Domain.Constants;
 using FlipBuddy.Domain.Exceptions;
 using FlipBuddy.Domain.Models;
 using FlipBuddy.Domain.Models.APIResponses;
@@ -31,7 +32,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Upload
 
 				var product = await _externalAPIService.GetAPIResponse<UpciteLookupAPIResponse>($"https://api.upcitemdb.com/prod/trial/lookup?upc={upc}");
 
-				if (product.items == null)
+				if (product.items == null || product.items.Count == 0 )
 				{
 					throw new OperationFailedException();
 				}
@@ -40,13 +41,13 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Upload
 																Guid.NewGuid(),
 																request.UserGuid,
 																product.items[0].title!,
-																1,
+																DefaultValues.DefaultCategory,
 																product.items[0].offers[0].price,
-																product.items[0].highest_recorded_price,
+																product.items[0].offers[0].price * 2,
 																product.items[0].description!,
 																1,
 																product.items[0].currency!,
-																0,
+																DefaultValues.DefaultCondition,
 																upc
 																));
 
