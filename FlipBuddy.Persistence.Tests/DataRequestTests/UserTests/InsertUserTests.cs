@@ -1,4 +1,5 @@
-﻿using FlipBuddy.Domain.Exceptions;
+﻿using FlipBuddy.Domain.Constants;
+using FlipBuddy.Domain.Exceptions;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Tests.Shared.TestObjects;
 
@@ -20,7 +21,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 										TestString.Random(),
 										TestString.Random(),
 										TestString.Random(),
-										TestNumber.GetSubTier()
+										TestNumber.GetSubTier(),
+										DefaultValues.DefaultFlipsAmount
 										));
 
 			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
@@ -44,9 +46,10 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 											TestString.Random(),
 											TestString.Random(),
 											TestString.Random(),
-											TestNumber.GetSubTier()
+											TestNumber.GetSubTier(),
+											DefaultValues.DefaultFlipsAmount
 											);
-		
+
 
 			var insertUserWithSameGuid = new InsertUser(
 														guid,
@@ -56,7 +59,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 														TestString.Random(),
 														TestString.Random(),
 														TestString.Random(),
-														TestNumber.GetSubTier()
+														TestNumber.GetSubTier(),
+														DefaultValues.DefaultFlipsAmount
 														);
 
 			//inserting first user
@@ -86,7 +90,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 											TestString.Random(),
 											TestString.Random(),
 											TestString.Random(),
-											TestNumber.GetSubTier()
+											TestNumber.GetSubTier(),
+											DefaultValues.DefaultFlipsAmount
 											);
 
 
@@ -98,7 +103,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 														TestString.Random(),
 														TestString.Random(),
 														TestString.Random(),
-														TestNumber.GetSubTier()
+														TestNumber.GetSubTier(),
+														DefaultValues.DefaultFlipsAmount
 														);
 
 			//inserting first user

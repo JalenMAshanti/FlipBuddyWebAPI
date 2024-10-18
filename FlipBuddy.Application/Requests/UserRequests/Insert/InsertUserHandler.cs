@@ -1,4 +1,5 @@
 ﻿using FlipBuddy.Application.BaseObjects.BaseHandlers;
+using FlipBuddy.Domain.Constants;
 using FlipBuddy.Domain.Exceptions;
 using FlipBuddy.Domain.Models;
 using FlipBuddy.Persistence.Abstractions;
@@ -23,7 +24,8 @@ namespace FlipBuddy.Application.Requests.UserRequests.Insert
 																				  request.Password,
 																				  request.Password,
 																				  request.Email!,
-																				  0
+																				  DefaultValues.DefaultSubscriptionTier,
+																				  DefaultValues.DefaultFlipsAmount
 																				));
 				if (rowsAffected <= 0)
 				{

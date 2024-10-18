@@ -12,7 +12,8 @@ namespace FlipBuddy.Persistence.DTO
 		public string PasswordHash { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public int SubscriptionTier { get; set; }
+		public int Flips { get; set; }
 
-		public User AsDomainUser() => new(Guid, Username, FirstName, LastName, Password, PasswordHash, Email, SubscriptionTier);
+		public User AsDomainUser() => new(Guid, Username, FirstName, LastName, Password, PasswordHash, Email, SubscriptionTier, Flips);
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FlipBuddy.Persistence.Abstractions;
+﻿using FlipBuddy.Domain.Constants;
+using FlipBuddy.Persistence.Abstractions;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Persistence.DTO;
 using FlipBuddy.Tests.Shared.Helpers;
@@ -21,9 +22,10 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 										TestString.Random(),
 										TestString.Random(),
 										TestString.Random(),
-										TestNumber.GetSubTier()
+										TestNumber.GetSubTier(),
+										DefaultValues.DefaultFlipsAmount
 										);
-			
+
 			await _dataAccess.ExecuteAsync(insertUserRequest);
 
 			var result = await _dataAccess.FetchAsync(new GetUserByGuid(guid));

@@ -1,4 +1,5 @@
-﻿using FlipBuddy.Persistence.DataRequestObjects.LoginRequests;
+﻿using FlipBuddy.Domain.Constants;
+using FlipBuddy.Persistence.DataRequestObjects.LoginRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Tests.Shared.TestObjects;
 
@@ -22,7 +23,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.LoginTests
 										password,
 										TestString.Random(),
 										TestString.Random(),
-										TestNumber.GetSubTier()
+										TestNumber.GetSubTier(),
+										DefaultValues.DefaultFlipsAmount
 										));
 
 			var result = await _dataAccess.FetchAsync(new LoginByUsernameAndPassword(username, password));
@@ -49,7 +51,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.LoginTests
 										password,
 										TestString.Random(),
 										TestString.Random(),
-										TestNumber.GetSubTier()
+										TestNumber.GetSubTier(),
+										DefaultValues.DefaultFlipsAmount
 										));
 
 			var result = await _dataAccess.FetchAsync(new LoginByUsernameAndPassword(TestString.Random(), password));
@@ -75,7 +78,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.LoginTests
 										password,
 										TestString.Random(),
 										TestString.Random(),
-										TestNumber.GetSubTier()
+										TestNumber.GetSubTier(),
+										DefaultValues.DefaultFlipsAmount
 										));
 
 			var result = await _dataAccess.FetchAsync(new LoginByUsernameAndPassword(username, TestString.Random()));

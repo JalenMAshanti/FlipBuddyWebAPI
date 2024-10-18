@@ -1,4 +1,5 @@
-﻿using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
+﻿using FlipBuddy.Domain.Constants;
+using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Tests.Shared.TestObjects;
 
@@ -19,8 +20,8 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 												user_DTO.Guid,
 												TestString.Random(),
 												TestNumber.GetSubTier(),
-												int.MinValue,
-												int.MinValue,
+												DefaultValues.TestPurchasePrice,
+												DefaultValues.TestPurchasePrice * 2,
 												TestString.Random(),
 												int.MinValue,
 												TestString.Random(),

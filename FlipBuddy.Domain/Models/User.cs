@@ -13,7 +13,8 @@ namespace FlipBuddy.Domain.Models
 					string password,
 					string passwordHash,
 					string email,
-					int subscriptionTier
+					int subscriptionTier,
+					int flips
 					)
 		{
 			Guid = guid;
@@ -24,6 +25,7 @@ namespace FlipBuddy.Domain.Models
 			PasswordHash = passwordHash;
 			Email = email;
 			SubscriptionTier = subscriptionTier;
+			Flips = flips;
 			
 		}
 
@@ -35,5 +37,6 @@ namespace FlipBuddy.Domain.Models
 		public string? PasswordHash { get; set; } = string.Empty;
 		public string? Email { get; set; } = string.Empty;
 		public int SubscriptionTier { get; set; }
+		public int Flips { get; set; }
 	}
 }

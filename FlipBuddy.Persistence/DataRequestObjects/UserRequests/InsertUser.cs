@@ -11,7 +11,8 @@ namespace FlipBuddy.Persistence.DataRequestObjects.UserRequests
 						  string password,
 						  string passwordHash,
 						  string email,
-						  int subscriptionTier)
+						  int subscriptionTier,
+						  int flips)
 		{
 			Guid = guid;
 			Username = username;
@@ -21,6 +22,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.UserRequests
 			PasswordHash = passwordHash;
 			Email = email;
 			SubscriptionTier = subscriptionTier;
+			Flips = flips;
 		}
 
 		public Guid Guid { get; set; }
@@ -31,9 +33,10 @@ namespace FlipBuddy.Persistence.DataRequestObjects.UserRequests
 		public string PasswordHash { get; set; }
 		public string Email { get; set; }
 		public int SubscriptionTier { get; set; }
+		public int Flips { get; set; }
 
 		public object? GetParameters() => this;
 
-		public string GetSql() => "INSERT INTO USERS (Guid, Username, FirstName, LastName, Password, PasswordHash, Email, SubscriptionTier) VALUES (@Guid, @Username, @FirstName, @LastName, @Password, @PasswordHash, @Email, @SubscriptionTier)";
+		public string GetSql() => "INSERT INTO USERS (Guid, Username, FirstName, LastName, Password, PasswordHash, Email, SubscriptionTier, Flips) VALUES (@Guid, @Username, @FirstName, @LastName, @Password, @PasswordHash, @Email, @SubscriptionTier, @Flips)";
 	}
 }
