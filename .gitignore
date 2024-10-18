@@ -13,6 +13,7 @@
 UpgradeLog-*.html
 .config
 appsettings.json
+App.config
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
