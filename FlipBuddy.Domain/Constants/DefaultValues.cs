@@ -4,5 +4,8 @@
 	{
 		public const int DefaultSubscriptionTier = 0;
 
+		public const int DefaultCategory = 22;
+
+		public const int DefaultCondition = 7;
 	}
 }
