@@ -1,4 +1,5 @@
 ﻿using FlipBuddy.Application.Abstraction;
+using FlipBuddy.Application.Requests.ProductRequests.GetByGuidAndUserGuid;
 using FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid;
 using FlipBuddy.Application.Requests.ProductRequests.Insert;
 using FlipBuddy.Application.Requests.ProductRequests.Upload;
@@ -19,5 +20,8 @@ namespace FlipBuddyAPI.Controllers
 
 		[HttpGet("Product/GetProductsByUserGuid")]
 		public async Task<GetProductsByUserGuidResponse> GetProductsByUserGuid([FromQuery]GetProductsByUserGuidRequest request) => await _orchestrator.GetRequestResponseAsync(request);
+
+		[HttpGet("Product/GetProductByGuidAndUserGuid")]
+		public async Task<GetProductByGuidAndUserGuidResponse> GetProductByGuidandUserGuid([FromQuery] GetProductByGuidAndUserGuidRequest request) => await _orchestrator.GetRequestResponseAsync(request);
 	}
 }
