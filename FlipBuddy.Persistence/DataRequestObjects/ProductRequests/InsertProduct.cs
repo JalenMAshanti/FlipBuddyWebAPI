@@ -16,6 +16,31 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 					   string description,
 					   int quantity,
 					   string currency,
+					   int conditionId
+					   ) 
+		{
+			Guid = guid;
+			UserGuid = userGuid;
+			Title = title;
+			CategoryId = categoryId;
+			PurchasedPrice = purchasedPrice;
+			SellPrice = sellPrice;
+			Description = description;
+			Quantity = quantity;
+			Currency = currency;
+			ConditionId = conditionId;
+		}
+
+
+		public InsertProduct(Guid guid,
+					   Guid userGuid,
+					   string title,
+					   int categoryId,
+					   decimal purchasedPrice,
+					   decimal sellPrice,
+					   string description,
+					   int quantity,
+					   string currency,
 					   int conditionId,
 					   string barCode
 					   )

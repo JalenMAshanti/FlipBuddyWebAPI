@@ -26,8 +26,7 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 														TestString.Random(),
 														int.MinValue,
 														TestString.Random(),
-														TestNumber.GetConditionId(),
-														TestString.Random(9)
+														TestNumber.GetConditionId()
 														);
 
 			var rowsAffected = await _dataAccess.ExecuteAsync(insertProductRequest);
@@ -57,8 +56,7 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 														TestString.Random(),
 														int.MinValue,
 														TestString.Random(),
-														TestNumber.GetConditionId(),
-														TestString.Random(9)
+														TestNumber.GetConditionId()
 														);
 
 			var insertProductRequestSameGuid = new InsertProduct(
@@ -71,8 +69,7 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 														TestString.Random(),
 														int.MinValue,
 														TestString.Random(),
-														TestNumber.GetConditionId(),
-														TestString.Random(9)
+														TestNumber.GetConditionId()
 														);
 
 			await _dataAccess.ExecuteAsync(insertProductRequest);

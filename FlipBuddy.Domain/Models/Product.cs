@@ -14,8 +14,8 @@
                        int quantity,
                        string currency,
                        int conditionId,
-                       string barCode
-                       ) 
+                       string barCode,
+                       string dateSold) 
         {
             Guid = guid;
             UserGuid = userGuid;    
@@ -28,7 +28,7 @@
             Currency = currency;
             ConditionId = conditionId;
             BarCode = barCode;
-
+            DateSold = dateSold;
         }
 
         public Guid? Guid { get; set; }
@@ -42,5 +42,6 @@
         public string? Currency { get; set; }
         public int? ConditionId { get; set; }
 		public string BarCode { get; set; } = string.Empty;
+        public string DateSold { get; set; } = string.Empty;
 	}
 }

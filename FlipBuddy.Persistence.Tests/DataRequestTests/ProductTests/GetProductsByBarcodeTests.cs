@@ -13,28 +13,11 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 		{
 			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var productGuid = Guid.NewGuid();
+			var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
-			var upc = TestString.Random(12);
+			var product = await _dataAccess.FetchListAsync(new GetProductsByBarcode(product_DTO.BarCode));
 
-			await _dataAccess.ExecuteAsync(new InsertProduct(
-												productGuid,
-												user_DTO.Guid,
-												TestString.Random(),
-												TestNumber.GetSubTier(),
-												DefaultValues.TestPurchasePrice,								
-												DefaultValues.TestPurchasePrice * 2,
-												TestString.Random(),
-												int.MinValue,
-												TestString.Random(),
-												TestNumber.GetConditionId(),
-												upc
-											   ));
-
-
-			var product = await _dataAccess.FetchListAsync(new GetProductsByBarcode(upc));
-
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(productGuid));
+			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
 			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
 
 			Assert.Single(product);

@@ -1,4 +1,5 @@
-﻿using FlipBuddy.Persistence.Abstractions;
+﻿using FlipBuddy.Domain.Constants;
+using FlipBuddy.Persistence.Abstractions;
 using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DTO;
 using FlipBuddy.Tests.Shared.Helpers;
@@ -9,26 +10,25 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 	{
 		private static IDataAccess _dataAccess = TestDataAccess.SharedInstance;
 
-		//public static async Task<Products_DTO> InsertAndFetchProductDtoAsync() 
-		//{
-		//	var userGuid = Guid.NewGuid();	
+		public static async Task<Products_DTO> InsertAndFetchProductDtoAsync(Guid userGuid)
+		{
+			await _dataAccess.ExecuteAsync(new InsertProduct(
+															 Guid.NewGuid(),
+															 userGuid,
+															 TestString.Random(),
+															 TestNumber.GetSubTier(),
+															 DefaultValues.TestPurchasePrice,
+															 DefaultValues.TestPurchasePrice * 2,
+															 TestString.Random(),
+															 int.MinValue,
+															 TestString.Random(),
+															 DefaultValues.DefaultCondition,
+															 DefaultValues.DefaultBarcode
+															));
 
-		//	await _dataAccess.ExecuteAsync(new InsertProduct(
-		//													 Guid.NewGuid(),
-		//												     userGuid,
-		//													 TestString.Random(),
-		//													 TestNumber.GetSubTier(),
-		//													 decimal.MinValue,
-		//													 decimal.MinValue,
-		//													 TestString.Random(),
-		//													 int.MinValue,
-		//													 TestString.Random(),
-		//													 TestNumber.GetConditionId()
-		//													));
+			var product = await _dataAccess.FetchAsync(new GetProductsByUserGuid(userGuid));
 
-		//	var product = await _dataAccess.FetchAsync(new GetProductsByUserGuid(userGuid));
-			
-		//	return product;
-		//}
+			return product;
+		}
 	}
 }
