@@ -10,6 +10,8 @@
 
 		public const int DefaultFlipsAmount = 5;
 
+		public const string DefaultBarcode = "1111";
+
 		public const decimal TestPurchasePrice = 4.99m;
 	}
 }
