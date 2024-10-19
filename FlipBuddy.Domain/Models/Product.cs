@@ -15,7 +15,8 @@
                        string currency,
                        int conditionId,
                        string barCode,
-                       string dateSold) 
+                       string dateSold
+                       ) 
         {
             Guid = guid;
             UserGuid = userGuid;    
