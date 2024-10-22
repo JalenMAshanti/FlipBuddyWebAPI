@@ -20,8 +20,8 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 															 DefaultValues.TestPurchasePrice,
 															 DefaultValues.TestPurchasePrice * 2,
 															 TestString.Random(),
-															 int.MinValue,
-															 TestString.Random(),
+															 DefaultValues.DefaultQuantity,
+															 DefaultValues.DefaultCurrency,
 															 DefaultValues.DefaultCondition,
 															 DefaultValues.DefaultBarcode
 															));
