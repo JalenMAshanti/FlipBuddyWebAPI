@@ -13,5 +13,9 @@
 		public const string DefaultBarcode = "1111";
 
 		public const decimal TestPurchasePrice = 4.99m;
+
+		public const int DefaultQuantity = 1;
+
+		public const string DefaultCurrency = "USD";
 	}
 }
