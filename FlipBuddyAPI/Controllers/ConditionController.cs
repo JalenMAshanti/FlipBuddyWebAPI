@@ -12,7 +12,7 @@ namespace FlipBuddyAPI.Controllers
 		{
 		}
 
-		[HttpGet("Category/GetAllConditions")]
+		[HttpGet("Condition/GetAllConditions")]
 		public async Task<GetAllConditionsResponse> GetAllConditions() => await _orchestrator.GetRequestResponseAsync(new GetAllConditionsRequest());
 	}
 }
