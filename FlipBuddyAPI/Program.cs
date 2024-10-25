@@ -18,6 +18,7 @@ builder.Services.AddScoped<IHandlerFactory, HandlerFactory>();
 builder.Services.AddTransient<ITypeActivator, TypeActivator>();
 builder.Services.AddScoped<IHandlerDictionary, HandlerDictionary>();
 builder.Services.AddScoped<IDataAccess, DataAccess>();
+
 builder.Services.AddScoped<IDbConnectionFactory, MySqlConnectionFactory>(sp =>
 {
 	var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -36,6 +37,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+
 
 app.UseHttpsRedirection();
 
