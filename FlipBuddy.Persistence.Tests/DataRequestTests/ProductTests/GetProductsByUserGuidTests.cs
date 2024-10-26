@@ -19,7 +19,7 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
 			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
 
-			Assert.Equal(1, product.Count());
+			Assert.Single(product);
 		}
 		#endregion
 
