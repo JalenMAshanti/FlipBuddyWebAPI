@@ -1,67 +1,49 @@
-﻿using eBay.Service.Call;
-using eBay.Service.Core.Sdk;
-using eBay.Service.Core.Soap;
-using System.Configuration;
+﻿using FlipBuddy.Domain.Models.Ebay.ListFixedPriceItem.Request;
+using FlipBuddy.Domain.Models.Ebay.ListFixedPriceItem.Response;
+using FlipBuddy.Persistence.Implementation;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace FlipBuddy.Persistence.Abstractions
 {
-    /// <summary>
-    /// A helloworld type of sample, 
-    /// showing how to call eBay API using eBay SDK.
-    /// </summary>
-    public class EbayAPIService : IAPIRequestInterface
-    {
-        private static ApiContext apiContext = null;
+    public abstract class EbayAPIService 
+	{
+		private readonly ClientFactory _clientFactory;
+		public EbayAPIService(ClientFactory clientFactory) => _clientFactory = clientFactory;
 
-        static void GetEbayContext()
-        {
-            //[Step 1] Initialize eBay ApiContext object
-            ApiContext apiContext = GetApiContext();
+		public async Task<AddFixedPriceItemResponse> AddFixedPricedItemAPIRequest(string url, Object body, string token)
+		{
+			string xmlContent = string.Empty;
 
+			XmlSerializer serializer = new XmlSerializer(typeof(AddFixedPriceItemRequest));
 
-            //[Step 2] Create Call object and execute the Call
-            GeteBayOfficialTimeCall apiCall = new GeteBayOfficialTimeCall(apiContext);
-            Console.WriteLine("Begin to call eBay API, please wait ...");
-            DateTime officialTime = apiCall.GeteBayOfficialTime();
-            Console.WriteLine("End to call eBay API, show call result:");
+			using (StringWriter stringWriter = new StringWriter())
+			{
+				serializer.Serialize(stringWriter, body);
+				xmlContent = stringWriter.ToString();
+			}
 
-            //[Step 3] Handle the result returned
-            Console.WriteLine("eBay official Time: " + officialTime);
-            Console.WriteLine();
-            Console.WriteLine("Press any key to close the program.");
-            Console.ReadKey();
-        }
+			var client = _clientFactory.CreateNewClient();
 
+			client.DefaultRequestHeaders.Add("X-EBAY-API-SITEID", "0");
+			client.DefaultRequestHeaders.Add("X-EBAY-API-COMPATIBILITY-LEVEL", "967");
+			client.DefaultRequestHeaders.Add("X-EBAY-API-CALL-NAME", "AddFixedPriceItem");
+			client.DefaultRequestHeaders.Add("X-EBAY-API-IAF-TOKEN", token);
 
-        /// <summary>
-        /// Populate eBay SDK ApiContext object with data from application configuration file
-        /// </summary>
-        /// <returns>ApiContext</returns>
-        static ApiContext GetApiContext()
-        {
-            //apiContext is a singleton,
-            //to avoid duplicate configuration reading
-            if (apiContext != null)
-            {
-                return apiContext;
-            }
-            else
-            {
-                apiContext = new ApiContext();
+			HttpContent content = new StringContent(xmlContent, Encoding.UTF8, "application/xml");
 
-                //set Api Server Url
-                apiContext.SoapApiServerUrl =
-                    ConfigurationManager.AppSettings["Environment.ApiServerUrl"];
-                //set Api Token to access eBay Api Server
-                ApiCredential apiCredential = new ApiCredential();
-                apiCredential.eBayToken =
-                    ConfigurationManager.AppSettings["UserAccount.ApiToken"];
-                apiContext.ApiCredential = apiCredential;
-                //set eBay Site target to US
-                apiContext.Site = SiteCodeType.US;
+			HttpResponseMessage response = await client.PostAsync(url, content);
 
-                return apiContext;
-            }
-        }
-    }
+			response.EnsureSuccessStatusCode();
+
+			using Stream responseStream = await response.Content.ReadAsStreamAsync();
+
+			// Deserialize the XML response to MyResponseModel
+			serializer = new XmlSerializer(typeof(AddFixedPriceItemResponse));
+
+			var result = (AddFixedPriceItemResponse)serializer.Deserialize(responseStream);
+			
+			return result;
+		}
+	}
 }
