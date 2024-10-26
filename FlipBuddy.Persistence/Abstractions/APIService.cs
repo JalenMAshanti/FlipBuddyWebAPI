@@ -1,5 +1,4 @@
 ﻿using FlipBuddy.Persistence.Implementation;
-using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
 using System.Text;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -66,7 +65,7 @@ namespace FlipBuddy.Persistence.Abstractions
 
 				var result = JsonConvert.DeserializeObject<IEnumerable<TResponse>>(response);
 
-				if (result == null) 
+				if (result == null)
 				{
 					throw new OperationCanceledException();
 				}
