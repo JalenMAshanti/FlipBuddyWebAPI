@@ -11,7 +11,7 @@ using FlipBuddy.Persistence.Implementation;
 
 namespace FlipBuddy.Application.Requests.ProductRequests.Upload
 {
-	internal class InsertProductByBarcodeHandler : DataRequestHandlerAPIService<InsertProductByBarcodeRequest>
+	internal class InsertProductByBarcodeHandler : DataRequestHandler<InsertProductByBarcodeRequest>
 	{
 		public InsertProductByBarcodeHandler(IDataAccess dataAccess, ExternalAPIService externalAPIService) : base(dataAccess, externalAPIService)
 		{
@@ -30,7 +30,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Upload
 				
 				var upc = BarcodeScanner.ReadBarcode(request.Image!);
 
-				var product = await _externalAPIService.GetAPIResponse<UpciteLookupAPIResponse>($"https://api.upcitemdb.com/prod/trial/lookup?upc={upc}");
+				var product = await _apiService.GetAPIResponse<UpciteLookupAPIResponse>($"https://api.upcitemdb.com/prod/trial/lookup?upc={upc}");
 
 				if (product.items == null || product.items.Count == 0 )
 				{
