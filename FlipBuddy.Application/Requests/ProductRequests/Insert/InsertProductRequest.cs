@@ -41,7 +41,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 		public int Quantity { get; set; }
 		public string? Currency { get; set; }
 		public int ConditionId { get; set; }
-		public string BarCode { get; set; }
+		public string? BarCode { get; set; }
 
 
 		public bool IsValid(out Validator validator)
