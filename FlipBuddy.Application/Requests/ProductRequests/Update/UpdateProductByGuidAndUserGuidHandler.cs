@@ -18,29 +18,29 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Update
         {
             var user_DTO = _dataAccess.FetchAsync(new GetUserByGuid(request.Guid));
 
-            if (user_DTO == null)
+            if (user_DTO is null)
             {
                 throw new DoesNotExistException(nameof(User), (request.UserGuid, nameof(request.UserGuid)));
             }
 
             var product_DTO = _dataAccess.FetchAsync(new GetProductByGuidAndUserGuid(request.UserGuid, request.Guid));
 
-            if (product_DTO == null)
+            if (product_DTO is null)
             {
                 throw new DoesNotExistException(nameof(Product), (request.Guid, nameof(request.Guid)));
             }
 
             await _dataAccess.ExecuteAsync(new UpdateProductByGuidAndUserGuid(  request.Guid, 
                                                                                 request.UserGuid, 
-                                                                                request.Title, 
+                                                                                request.Title!, 
                                                                                 request.CategoryId, 
                                                                                 request.PurchasedPrice, 
                                                                                 request.SellPrice, 
-                                                                                request.Description, 
+                                                                                request.Description!, 
                                                                                 request.Quantity, 
-                                                                                request.Currency, 
+                                                                                request.Currency!, 
                                                                                 request.ConditionId, 
-                                                                                request.BarCode, 
+                                                                                request.BarCode!, 
                                                                                 request.DateSold));
         }
     }
