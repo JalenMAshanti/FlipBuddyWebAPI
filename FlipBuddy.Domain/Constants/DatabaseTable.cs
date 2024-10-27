@@ -9,5 +9,9 @@
 		public const string Categories = "categories";
 
 		public const string Conditions = "conditions";
+
+		public const string ProductsSpecifics = "productspecifics";
+
+		public const string ProductsSpecificValues = "productspecificvalues";
 	}
 }

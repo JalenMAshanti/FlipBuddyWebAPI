@@ -11,5 +11,7 @@
         public const int PasswordHash = 256;
 
         public const int ProductName = 80;
+
+        public const int SpecificName = 40;
     }
 }
