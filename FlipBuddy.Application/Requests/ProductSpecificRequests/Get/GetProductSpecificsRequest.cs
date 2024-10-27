@@ -3,7 +3,7 @@ using FlipBuddy.Application.BaseObjects.BaseRequests;
 
 namespace FlipBuddy.Application.Requests.ProductSpecificRequests.Get
 {
-	public class GetProductSpecificsRequest : RequiredGuidRequest, IRequestResponse<GetProductSpecificsResponse>
+	public class GetProductSpecificsRequest : RequiredUserGuidRequest, IRequestResponse<GetProductSpecificsResponse>
 	{
 		public GetProductSpecificsRequest() { }
 

@@ -3,17 +3,17 @@ using FlipBuddy.Domain.Validation.GuidValidation;
 
 namespace FlipBuddy.Application.BaseObjects.BaseRequests
 {
-	public abstract class RequiredGuidRequest
+	public abstract class RequiredUserGuidRequest
 	{
-		public RequiredGuidRequest() { }	
-		public RequiredGuidRequest(Guid guid) => Guid = guid;
+		public RequiredUserGuidRequest() { }	
+		public RequiredUserGuidRequest(Guid userGuid) => UserGuid = userGuid;
 
 
-		public Guid Guid { get; set; }
+		public Guid UserGuid { get; set; }
 
 		public bool IsValid(out Validator validator) 
 		{
-			validator = new(new GuidRequiredRule(Guid, nameof(Guid)));
+			validator = new(new GuidRequiredRule(UserGuid, nameof(UserGuid)));
 
 			return validator.IsPassingAllRules;
 		}
