@@ -6,6 +6,7 @@ using FlipBuddy.Application.Requests.ProductRequests.Update;
 using FlipBuddy.Application.Requests.ProductRequests.Upload;
 using FlipBuddy.Application.Requests.ProductSpecificRequests.Delete;
 using FlipBuddy.Application.Requests.ProductSpecificRequests.Get;
+using FlipBuddy.Application.Requests.ProductSpecificRequests.Insert;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlipBuddyAPI.Controllers
@@ -16,7 +17,7 @@ namespace FlipBuddyAPI.Controllers
         public ProductController(IOrchestrator orchestrator) : base(orchestrator) { }
 
         //Base Products
-        
+
         [HttpPost("Product/InsertProduct")]
         public async Task InsertProduct([FromBody] InsertProductRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
@@ -32,14 +33,25 @@ namespace FlipBuddyAPI.Controllers
         [HttpPut("Product/UpdateProductByGuidAndUserGuid")]
         public async Task UpdateProductByGuidAndUserGuid([FromBody] UpdateProductByGuidAndUserGuidRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
-        
+        [HttpDelete("Product/DeleteProductByProductGuid")]
+        //public async Task DeleteProductByProductGuid([FromQuery] Delet)
+
+
+
         //Product Specifics
         
-        [HttpPost("Product/InsertProductSpecific")]
+        [HttpDelete("Product/DeleteProductSpecific")]
         public async Task DeleteProductSpecific([FromQuery] DeleteProductSpecificRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
         [HttpGet("Product/GetProductSpecifics")]
         public async Task<GetProductSpecificsResponse> GetProductSpecifics([FromQuery] GetProductSpecificsRequest request) => await _orchestrator.GetRequestResponseAsync(request);
+
+        [HttpPost("Product/InsertProductSpecific")]
+        public async Task InsertProductSpecific([FromBody] InsertProductSpecificRequest request) => await _orchestrator.ExecuteRequestAsync(request);
+
+
+        //Proudct Specific Values
+
 
     }
 }
