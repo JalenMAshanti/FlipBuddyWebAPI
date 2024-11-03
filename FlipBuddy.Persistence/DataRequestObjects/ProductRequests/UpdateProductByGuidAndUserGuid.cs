@@ -75,7 +75,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
         public string Currency { get; set; } = string.Empty;
         public int ConditionId { get; set; }
         public string BarCode { get; set; } = string.Empty;
-        public string DateSold { get; set; } = string.Empty;
+        public string? DateSold { get; set; } 
 
 
         public object? GetParameters() => this;
