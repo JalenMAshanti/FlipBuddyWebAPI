@@ -15,6 +15,6 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductSpecificValueRequests
 		public string SpecificValue { get; set; } = string.Empty;
 
 		public object? GetParameters() => this;
-		public string GetSql() => $@"INSERT INTO {DatabaseTable.ProductsSpecifics} (ProductGuid, SpecificName) VALUES (@ProductGuid, @SpecificName);";
+		public string GetSql() => $@"INSERT INTO {DatabaseTable.ProductsSpecificValues} (SpecificId, SpecificValue) VALUES (@SpecificId, @SpecificValue);";
 	}
 }
