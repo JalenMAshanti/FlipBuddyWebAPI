@@ -2,6 +2,7 @@
 using FlipBuddy.Persistence.Abstractions;
 using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DTO;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.Helpers;
 
 namespace FlipBuddy.Tests.Shared.TestObjects
@@ -15,8 +16,8 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 			await _dataAccess.ExecuteAsync(new InsertProduct(
 															 Guid.NewGuid(),
 															 userGuid,
-															 TestString.Random(),
-															 TestNumber.GetSubTier(),
+															 TestValues.ProductTitle,
+															 DefaultValues.DefaultCategory,
 															 DefaultValues.TestPurchasePrice,
 															 DefaultValues.TestPurchasePrice * 2,
 															 TestString.Random(),

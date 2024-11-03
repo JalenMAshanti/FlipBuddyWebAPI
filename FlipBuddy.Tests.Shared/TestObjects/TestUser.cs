@@ -2,6 +2,7 @@
 using FlipBuddy.Persistence.Abstractions;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Persistence.DTO;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.Helpers;
 
 namespace FlipBuddy.Tests.Shared.TestObjects
@@ -17,7 +18,7 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 			var insertUserRequest = new InsertUser(
 										guid, 
 										TestString.Random(),
-										TestString.Random(15),
+										TestValues.UserFirstName,
 										TestString.Random(),
 										TestString.Random(),
 										TestString.Random(),
