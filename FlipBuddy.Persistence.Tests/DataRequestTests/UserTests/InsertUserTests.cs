@@ -1,123 +1,128 @@
 ﻿using FlipBuddy.Domain.Constants;
 using FlipBuddy.Domain.Exceptions;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.TestObjects;
 
 namespace FlipBuddy.Persistence.Tests.DataRequestTests.UserTests
 {
-	public class InsertUserTests : BaseDataRequestTest
-	{
-		#region Happy Path
-		[Fact]
-		public async Task InsertUser_Given_InputIsValid_ShouldReturn_OneRowAffected()
-		{
-			var guid = Guid.NewGuid();
-
-			var rowsaffected = await _dataAccess.ExecuteAsync(new InsertUser(
-										guid,
-										TestString.Random(),
-										TestString.Random(15),
-										TestString.Random(),
-										TestString.Random(),
-										TestString.Random(),
-										TestString.Random(),
-										TestNumber.GetSubTier(),
-										DefaultValues.DefaultFlipsAmount
-										));
-
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
-
-			Assert.Equal(1, rowsaffected);
-		}
-		#endregion
+    public class InsertUserTests : BaseDataRequestTest
+    {
+        #region Happy Path
+        [Fact]
+        public async Task InsertUser_Given_InputIsValid_ShouldReturn_OneRowAffected()
+        {
+            //Insert User
+            var guid = Guid.NewGuid();
+            var rowsaffected = await _dataAccess.ExecuteAsync(new InsertUser(
+                                        guid,
+                                        TestString.Random(),
+                                        TestValues.UserFirstName,
+                                        TestString.Random(),
+                                        TestString.Random(),
+                                        TestString.Random(),
+                                        TestString.Random(),
+                                        TestNumber.GetSubTier(),
+                                        DefaultValues.DefaultFlipsAmount
+                                        ));
 
 
-		#region Bad Paths
-		[Fact]
-		public async Task InsertUser_Given_GuidAlreadyTaken_ShouldThrowDataAccessException()
-		{
-			var guid = Guid.NewGuid();
+            //Test Result
+            Assert.Equal(1, rowsaffected);
 
-			var insertUser = new InsertUser(
-											guid,
-											TestString.Random(),
-											TestString.Random(15),
-											TestString.Random(),
-											TestString.Random(),
-											TestString.Random(),
-											TestString.Random(),
-											TestNumber.GetSubTier(),
-											DefaultValues.DefaultFlipsAmount
-											);
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
+        }
+        #endregion
 
 
-			var insertUserWithSameGuid = new InsertUser(
-														guid,
-														TestString.Random(),
-														TestString.Random(15),
-														TestString.Random(),
-														TestString.Random(),
-														TestString.Random(),
-														TestString.Random(),
-														TestNumber.GetSubTier(),
-														DefaultValues.DefaultFlipsAmount
-														);
+        #region Bad Paths
+        [Fact]
+        public async Task InsertUser_Given_GuidAlreadyTaken_ShouldThrowDataAccessException()
+        {
+            //Insert User
+            var guid = Guid.NewGuid();
+            var insertUser = new InsertUser(
+                                            guid,
+                                            TestString.Random(),
+                                            TestValues.UserFirstName,
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestNumber.GetSubTier(),
+                                            DefaultValues.DefaultFlipsAmount
+                                            );
 
-			//inserting first user
-			await _dataAccess.ExecuteAsync(insertUser);
-
-			//recording exception from inserting second user with same guid
-			var exception = await Record.ExceptionAsync(async ()=> await _dataAccess.ExecuteAsync(insertUserWithSameGuid));
-
-			Assert.IsType<DataAccessException>(exception);
-
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
-		}
+            await _dataAccess.ExecuteAsync(insertUser);
 
 
-		[Fact]
-		public async Task InsertUser_Given_UsernameAlreadyTaken_ShouldThrowDataAccessException()
-		{
-			var guid = Guid.NewGuid();
-			var username = TestString.Random();	
-			
+            //Insert Second User
+            var insertUserWithSameGuid = new InsertUser(
+                                                        guid,
+                                                        TestString.Random(),
+                                                        TestValues.UserFirstName,
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestNumber.GetSubTier(),
+                                                        DefaultValues.DefaultFlipsAmount
+                                                        );
 
-			var insertUser = new InsertUser(
-											guid,
-											username,
-											TestString.Random(15),
-											TestString.Random(),
-											TestString.Random(),
-											TestString.Random(),
-											TestString.Random(),
-											TestNumber.GetSubTier(),
-											DefaultValues.DefaultFlipsAmount
-											);
+            var exception = await Record.ExceptionAsync(async () => await _dataAccess.ExecuteAsync(insertUserWithSameGuid));
+
+            //Test Result
+            Assert.IsType<DataAccessException>(exception);
+
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
+        }
 
 
-			var insertUserWithSameUsername = new InsertUser(
-														Guid.NewGuid(),
-														username,
-														TestString.Random(15),
-														TestString.Random(),
-														TestString.Random(),
-														TestString.Random(),
-														TestString.Random(),
-														TestNumber.GetSubTier(),
-														DefaultValues.DefaultFlipsAmount
-														);
+        [Fact]
+        public async Task InsertUser_Given_UsernameAlreadyTaken_ShouldThrowDataAccessException()
+        {
+            //Insert User
+            var guid = Guid.NewGuid();
+            var username = TestString.Random();
+            var insertUser = new InsertUser(
+                                            guid,
+                                            username,
+                                            TestValues.UserFirstName,
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestString.Random(),
+                                            TestNumber.GetSubTier(),
+                                            DefaultValues.DefaultFlipsAmount
+                                            );
 
-			//inserting first user
-			await _dataAccess.ExecuteAsync(insertUser);
+            await _dataAccess.ExecuteAsync(insertUser);
 
-			//recording exception from inserting second user with same username
-			var exception = await Record.ExceptionAsync(async () => await _dataAccess.ExecuteAsync(insertUserWithSameUsername));
+            //Insert Second User
+            var insertUserWithSameUsername = new InsertUser(
+                                                        Guid.NewGuid(),
+                                                        username,
+                                                        TestValues.UserFirstName,
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestString.Random(),
+                                                        TestNumber.GetSubTier(),
+                                                        DefaultValues.DefaultFlipsAmount
+                                                        );
 
-			Assert.IsType<DataAccessException>(exception);
+            var exception = await Record.ExceptionAsync(async () => await _dataAccess.ExecuteAsync(insertUserWithSameUsername));
 
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
-		}
 
-		#endregion
-	}
+            //Test Result
+            Assert.IsType<DataAccessException>(exception);
+
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(guid));
+        }
+
+        #endregion
+    }
 }
