@@ -6,6 +6,6 @@ namespace FlipBuddy.Application.Requests.ProductSpecificRequests.Get
 	{
 		public GetProductSpecificsResponse(IEnumerable<ProductSpecific> specifics) => Specifics = specifics;
 
-		IEnumerable<ProductSpecific> Specifics { get; set; }
+		public IEnumerable<ProductSpecific> Specifics { get; set; }
 	}
 }
