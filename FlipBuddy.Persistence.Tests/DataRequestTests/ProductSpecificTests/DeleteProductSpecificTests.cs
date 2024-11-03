@@ -2,89 +2,106 @@
 using FlipBuddy.Persistence.DataRequestObjects.ProductSpecificRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
 using FlipBuddy.Persistence.DTO;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.TestObjects;
 
 namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductSpecificTests
 {
-	public class DeleteProductSpecificTests : BaseDataRequestTest
-	{
-		#region Happy Path
-		[Fact]
-		public async Task DeleteProductSpecific_Given_ProductExistsAndIdIsCorrect_ShouldReturnOneRowAffected()
-		{
-			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
+    public class DeleteProductSpecificTests : BaseDataRequestTest
+    {
+        #region Happy Path
+        [Fact]
+        public async Task DeleteProductSpecific_Given_ProductExistsAndIdIsCorrect_ShouldReturnOneRowAffected()
+        {
+            //Insert User
+            var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
+            //Insert Product
+            var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
-			var specificName = TestString.Random();
+            //Insert ProductSpecific
+            await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, TestValues.SpecificName));
 
-			await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, specificName));
+            //Get ProductSpecifics
+            var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+            ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == TestValues.SpecificName).First();
 
-			var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+            //Delete ProductSpecifics(TESTING)
+            var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(productSpecific_DTO.SpecificId, productSpecific_DTO.ProductGuid));
 
-			ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == specificName).First();
+            //Test Result
+            Assert.Equal(1, rowsAffected);
 
-			var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(productSpecific_DTO.SpecificId, productSpecific_DTO.ProductGuid));
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
+        }
+        #endregion
 
-			Assert.Equal(1, rowsAffected);
+        #region Bad Paths
+        [Fact]
+        public async Task DeleteProductSpecific_Given_ProductGuidDoesNotExist_ShouldReturnZeroRowsAffected()
+        {
+            //Insert User
+            var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
-		}
-		#endregion
+            //Insert Product
+            var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
-		#region Bad Paths
-		[Fact]
-		public async Task DeleteProductSpecific_Given_ProductGuidDoesNotExist_ShouldReturnZeroRowsAffected()
-		{
-			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
+            //Insert ProductSpecific
+            await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, TestValues.SpecificName));
 
-			var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
+            //Get ProductSpecifics
+            var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+            ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == TestValues.SpecificName).First();
 
-			var specificName = TestString.Random();
+            //Delete ProductSpecifics(TESTING)
+            var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(productSpecific_DTO.SpecificId, Guid.NewGuid()));
 
-			await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, specificName));
+            //Test Result
+            Assert.Equal(0, rowsAffected);
 
-			var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
+        }
 
-			ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == specificName).First();
+        [Fact]
+        public async Task DeleteProductSpecific_Given_SpecificIdDoesNotExist_ShouldReturnZeroRowsAffected()
+        {
+            //Insert User
+            var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(productSpecific_DTO.SpecificId, Guid.NewGuid()));
+            //Insert Product
+            var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
-			Assert.Equal(0, rowsAffected);
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
-		}
+            //Insert ProductSpecific
+            await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, TestValues.SpecificName));
 
-		[Fact]
-		public async Task DeleteProductSpecific_Given_SpecificIdDoesNotExist_ShouldReturnZeroRowsAffected()
-		{
-			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
+            //Get ProductSpecifics
+            var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+            ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == TestValues.SpecificName).First();
 
-			var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
+            //Delete ProductSpecifics(TESTING)
+            var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(int.MaxValue, productSpecific_DTO.ProductGuid));
 
-			var specificName = TestString.Random();
+            //Test Result
+            Assert.Equal(0, rowsAffected);
 
-			await _dataAccess.ExecuteAsync(new InsertProductSpecific(product_DTO.Guid, specificName));
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
+        }
 
-			var specifics = await _dataAccess.FetchListAsync(new GetProductSpecifics(product_DTO.Guid));
+        [Fact]
+        public async Task DeleteProductSpecific_Given_SpecificIdAndProductGuidDoesNotExist_ShouldReturnZeroRowsAffected()
+        {
+            //Delete ProductSpecifics(TESTING)
+            var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(int.MaxValue, Guid.NewGuid()));
 
-			ProductSpecifics_DTO productSpecific_DTO = specifics.Where(_ => _.SpecificName == specificName).First();
-
-			var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(int.MaxValue, productSpecific_DTO.ProductGuid));
-
-			Assert.Equal(0, rowsAffected);
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
-		}
-
-		[Fact]
-		public async Task DeleteProductSpecific_Given_SpecificIdAndProductGuidDoesNotExist_ShouldReturnZeroRowsAffected()
-		{
-			var rowsAffected = await _dataAccess.ExecuteAsync(new DeleteProductSpecific(int.MaxValue, Guid.NewGuid()));
-
-			Assert.Equal(0, rowsAffected);	
-		}
-		#endregion
-	}
+            //Test Result
+            Assert.Equal(0, rowsAffected);
+        }
+        #endregion
+    }
 }
