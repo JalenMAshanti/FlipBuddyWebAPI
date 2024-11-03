@@ -1,6 +1,7 @@
 ﻿using FlipBuddy.Domain.Constants;
 using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.TestObjects;
 
 namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
@@ -11,15 +12,17 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
         [Fact]
         public async Task UpdateProduct_Given_GuidsExist_ShouldEqualUpdateProduct()
         {
+            //Insert User
             var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
+            //Insert Product
             var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
-
+            //UpdateProduct(TESTING)
             var UpdateProductRequest = new UpdateProductByGuidAndUserGuid(
                                                         product_DTO.Guid,
                                                         user_DTO.Guid,
-                                                        TestString.Random(),
+                                                        TestValues.ProductTitle,
                                                         TestNumber.GetSubTier(),
                                                         DefaultValues.TestPurchasePrice,
                                                         DefaultValues.TestPurchasePrice * 2,
@@ -33,8 +36,10 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 
             await _dataAccess.ExecuteAsync(UpdateProductRequest);
 
+            //Get Product
             var updatedProduct_DTO = await _dataAccess.FetchAsync(new GetProductByGuidAndUserGuid(user_DTO.Guid, product_DTO.Guid));
 
+            //Test Results
             Assert.Equal(UpdateProductRequest.Title, updatedProduct_DTO.Title);
             Assert.Equal(UpdateProductRequest.Description, updatedProduct_DTO.Description);
             Assert.Equal(UpdateProductRequest.CategoryId, updatedProduct_DTO.CategoryId);
@@ -47,9 +52,9 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
             Assert.Equal(UpdateProductRequest.Guid, updatedProduct_DTO.Guid);
             Assert.Equal(UpdateProductRequest.UserGuid, updatedProduct_DTO.UserGuid);
 
+            //Clean up
             await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
             await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
-
         }
         #endregion
 
@@ -58,12 +63,14 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
         [Fact]
         public async Task UpdateProduct_Given_ProductGuidDoesNotExist_ShouldReturn0RowsAffected()
         {
+            //Insert User
             var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
+            //Update Product(TESTING)
             var UpdateProductRequest = new UpdateProductByGuidAndUserGuid(
                                                         Guid.NewGuid(),
                                                         user_DTO.Guid,
-                                                        TestString.Random(),
+                                                        TestValues.ProductTitle,
                                                         TestNumber.GetSubTier(),
                                                         DefaultValues.TestPurchasePrice,
                                                         DefaultValues.TestPurchasePrice * 2,
@@ -76,19 +83,21 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 
             var rowsAffected = await _dataAccess.ExecuteAsync(UpdateProductRequest);
 
+            //Test Result
             Assert.Equal(0, rowsAffected);
 
+            //Clean up
             await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
         }
 
         [Fact]
         public async Task UpdateProduct_Given_UserGuidDoesNotExist_ShouldReturn0RowsAffected()
         {
-
+            //Update Product(TESTING)
             var UpdateProductRequest = new UpdateProductByGuidAndUserGuid(
                                                         Guid.NewGuid(),
                                                         Guid.NewGuid(),
-                                                        TestString.Random(),
+                                                        TestValues.ProductTitle,
                                                         TestNumber.GetSubTier(),
                                                         DefaultValues.TestPurchasePrice,
                                                         DefaultValues.TestPurchasePrice * 2,
@@ -101,6 +110,7 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 
             var rowsAffected = await _dataAccess.ExecuteAsync(UpdateProductRequest);
 
+            //Test Result
             Assert.Equal(0, rowsAffected);
         }
         #endregion

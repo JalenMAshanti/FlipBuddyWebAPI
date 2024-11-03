@@ -2,85 +2,97 @@
 using FlipBuddy.Domain.Exceptions;
 using FlipBuddy.Persistence.DataRequestObjects.ProductRequests;
 using FlipBuddy.Persistence.DataRequestObjects.UserRequests;
+using FlipBuddy.Tests.Shared.Constants;
 using FlipBuddy.Tests.Shared.TestObjects;
 
 namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
 {
-	public class InsertProductTests : BaseDataRequestTest
-	{
-		#region Happy Path
-		[Fact]
-		public async Task InsertProduct_Given_InputIsValid_ShouldReturnOneRowAffected()
-		{
-			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
+    public class InsertProductTests : BaseDataRequestTest
+    {
+        #region Happy Path
+        [Fact]
+        public async Task InsertProduct_Given_InputIsValid_ShouldReturnOneRowAffected()
+        {
+            //Insert User
+            var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var productGuid = Guid.NewGuid();
+            //Insert Product(TESTING)
+            var productGuid = Guid.NewGuid();
 
-			var insertProductRequest = new InsertProduct(
-														productGuid,
-														user_DTO.Guid,
-														TestString.Random(),
-														TestNumber.GetSubTier(),
-														DefaultValues.TestPurchasePrice,
-														DefaultValues.TestPurchasePrice * 2,
-														TestString.Random(),
-														int.MinValue,
-														TestString.Random(),
-														TestNumber.GetConditionId()
-														);
+            var insertProductRequest = new InsertProduct(
+                                                        productGuid,
+                                                        user_DTO.Guid,
+                                                        TestValues.ProductTitle,
+                                                        TestNumber.GetSubTier(),
+                                                        DefaultValues.TestPurchasePrice,
+                                                        DefaultValues.TestPurchasePrice * 2,
+                                                        TestString.Random(),
+                                                        int.MinValue,
+                                                        TestString.Random(),
+                                                        TestNumber.GetConditionId()
+                                                        );
 
-			var rowsAffected = await _dataAccess.ExecuteAsync(insertProductRequest);
+            var rowsAffected = await _dataAccess.ExecuteAsync(insertProductRequest);
 
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(productGuid));
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
+            //Test Result
+            Assert.Equal(1, rowsAffected);
 
-			Assert.Equal(1, rowsAffected);
-		}
-		#endregion
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteProductByGuid(productGuid));
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
 
-		#region Bad Paths
-		[Fact]
-		public async Task InsertProduct_Given_GuidAlreadyTacked_ShouldThrowDataAccessException()
-		{
-			var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var productGuid = Guid.NewGuid();
+        }
+        #endregion
 
-			var insertProductRequest = new InsertProduct(
-														productGuid,
-														user_DTO.Guid,
-														TestString.Random(),
-														TestNumber.GetSubTier(),
-														DefaultValues.TestPurchasePrice,
-														DefaultValues.TestPurchasePrice * 2,
-														TestString.Random(),
-														int.MinValue,
-														TestString.Random(),
-														TestNumber.GetConditionId()
-														);
+        #region Bad Paths
+        [Fact]
+        public async Task InsertProduct_Given_GuidAlreadyTacked_ShouldThrowDataAccessException()
+        {
+            //Insert User
+            var user_DTO = await TestUser.InsertAndFetchUsersDtoAsync();
 
-			var insertProductRequestSameGuid = new InsertProduct(
-														productGuid,
-														user_DTO.Guid,
-														TestString.Random(),
-														TestNumber.GetSubTier(),
-														DefaultValues.TestPurchasePrice,
-														DefaultValues.TestPurchasePrice * 2,
-														TestString.Random(),
-														int.MinValue,
-														TestString.Random(),
-														TestNumber.GetConditionId()
-														);
+            // InsertProduct(TESTING) 
+            var productGuid = Guid.NewGuid();
 
-			await _dataAccess.ExecuteAsync(insertProductRequest);
+            var insertProductRequest = new InsertProduct(
+                                                        productGuid,
+                                                        user_DTO.Guid,
+                                                        TestValues.ProductTitle,
+                                                        TestNumber.GetSubTier(),
+                                                        DefaultValues.TestPurchasePrice,
+                                                        DefaultValues.TestPurchasePrice * 2,
+                                                        TestString.Random(),
+                                                        int.MinValue,
+                                                        TestString.Random(),
+                                                        TestNumber.GetConditionId()
+                                                        );
 
-			var exception = await Record.ExceptionAsync(async () => await _dataAccess.ExecuteAsync(insertProductRequestSameGuid));
+            var insertProductRequestSameGuid = new InsertProduct(
+                                                        productGuid,
+                                                        user_DTO.Guid,
+                                                        TestValues.ProductTitle,
+                                                        TestNumber.GetSubTier(),
+                                                        DefaultValues.TestPurchasePrice,
+                                                        DefaultValues.TestPurchasePrice * 2,
+                                                        TestString.Random(),
+                                                        int.MinValue,
+                                                        TestString.Random(),
+                                                        TestNumber.GetConditionId()
+                                                        );
 
-			Assert.IsType<DataAccessException>(exception);
+            await _dataAccess.ExecuteAsync(insertProductRequest);
 
-			await _dataAccess.ExecuteAsync(new DeleteProductByGuid(productGuid));
-			await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
-		}
-		#endregion
-	}
+            //Insert Second Product(TESTING)
+            var exception = await Record.ExceptionAsync(async () => await _dataAccess.ExecuteAsync(insertProductRequestSameGuid));
+
+            //Test Result
+            Assert.IsType<DataAccessException>(exception);
+
+            //Clean up
+            await _dataAccess.ExecuteAsync(new DeleteProductByGuid(productGuid));
+            await _dataAccess.ExecuteAsync(new DeleteUserByGuid(user_DTO.Guid));
+        }
+        #endregion
+    }
 }
