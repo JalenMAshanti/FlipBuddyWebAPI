@@ -16,21 +16,28 @@ namespace FlipBuddy.Application.Requests.ProductRequests.GetByGuidAndUserGuid
 
 		public async override Task<GetProductByGuidAndUserGuidResponse> GetResponseAsync(GetProductByGuidAndUserGuidRequest request)
 		{
-			var userDTO = await _dataAccess.FetchAsync(new GetUserByGuid(request.UserGuid));
-
-			if (userDTO == null)
+			try
 			{
-				throw new DoesNotExistException(nameof(User), (request.UserGuid, nameof(request.UserGuid)));
+				var userDTO = await _dataAccess.FetchAsync(new GetUserByGuid(request.UserGuid));
+
+				if (userDTO == null)
+				{
+					throw new DoesNotExistException(nameof(User), (request.UserGuid, nameof(request.UserGuid)));
+				}
+
+				var productDTO = await _dataAccess.FetchAsync(new GetProductByGuidAndUserGuid(request.UserGuid, request.Guid));
+
+				if (productDTO != null)
+				{
+					return new GetProductByGuidAndUserGuidResponse(productDTO.AsDomainProduct());
+				}
+
+				throw new DoesNotExistException(nameof(Product), (request.Guid, nameof(request.Guid)));
 			}
-
-			var productDTO = await _dataAccess.FetchAsync(new GetProductByGuidAndUserGuid(request.UserGuid, request.Guid));
-
-			if (productDTO != null)
+			catch 
 			{
-				return new GetProductByGuidAndUserGuidResponse(productDTO.AsDomainProduct());
-			}
-
-			throw new DoesNotExistException(nameof(Product), (request.Guid, nameof(request.Guid)));
+                throw new OperationFailedException();
+            }
 		}
 	}
 }
