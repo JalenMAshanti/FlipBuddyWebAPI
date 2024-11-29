@@ -13,5 +13,7 @@
         public const int ProductName = 80;
 
         public const int SpecificName = 40;
+
+        public const int SpecificValue = 256;
     }
 }
