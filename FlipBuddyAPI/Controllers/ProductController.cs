@@ -7,6 +7,8 @@ using FlipBuddy.Application.Requests.ProductRequests.Upload;
 using FlipBuddy.Application.Requests.ProductSpecificRequests.Delete;
 using FlipBuddy.Application.Requests.ProductSpecificRequests.Get;
 using FlipBuddy.Application.Requests.ProductSpecificRequests.Insert;
+using FlipBuddy.Application.Requests.ProductSpecificValueRequests.Insert;
+using FlipBuddy.Application.Requests.ProductSpecificValuesRequests.Delete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlipBuddyAPI.Controllers
@@ -51,7 +53,11 @@ namespace FlipBuddyAPI.Controllers
 
 
         //Proudct Specific Values
+        [HttpDelete("Product/DeleteProductSpecificValue")]
+        public async Task DeleteProductSpecificValue([FromBody] DeleteProductSpecificValueRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
+        [HttpPost("Product/InsertProductSpecificValue")]
+        public async Task InsertProductSpecificValue([FromBody] InsertProductSpecificValueRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
     }
 }
