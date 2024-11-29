@@ -9,7 +9,7 @@ namespace FlipBuddy.Domain.Models.Ebay.ListFixedPriceItem.Response
 		public string CurrencyID { get; set; } = string.Empty;
 
 		[XmlText]
-		public double Text { get; set; }
+		public string Text { get; set; }
 
 		[XmlElement(ElementName = "Name")]
 		public string Name { get; set; } = string.Empty;

@@ -9,7 +9,7 @@ namespace FlipBuddy.Domain.Models.Ebay.ListFixedPriceItem.Response
 	//    var test = (AddFixedPriceItemResponse)serializer.Deserialize(reader);
 	// }
 
-	[XmlRoot(ElementName = "AddFixedPriceItemResponse")]
+	[XmlRoot(ElementName = "AddFixedPriceItemResponse", Namespace = "urn:ebay:apis:eBLBaseComponents")]
 	public class AddFixedPriceItemResponse
 	{
 		[XmlElement(ElementName = "Timestamp")]
