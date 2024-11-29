@@ -25,6 +25,7 @@ builder.Services.AddScoped<IDbConnectionFactory, MySqlConnectionFactory>(sp =>
 	return new MySqlConnectionFactory(connectionString!);
 });
 builder.Services.AddScoped<APIService, ExternalAPIService>();
+builder.Services.AddScoped<ExternalEbayAPIService>();
 builder.Services.AddScoped<ClientFactory>();
 builder.Services.AddScoped<ExternalAPIService>();
 
