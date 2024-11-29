@@ -8,6 +8,7 @@
                        Guid userGuid,
                        string title,
                        int categoryId,
+                       int ebayCategoryId,
                        decimal purchasedPrice,
                        decimal sellPrice,
                        string description,   
@@ -22,6 +23,7 @@
             UserGuid = userGuid;    
             Title = title;
             CategoryId = categoryId;
+            EbayCategoryId = ebayCategoryId;
             PurchasedPrice = purchasedPrice;
             SellPrice = sellPrice;
             Description = description;  
@@ -36,6 +38,7 @@
         public Guid? UserGuid { get; set; }
         public string? Title { get; set; }
         public int CategoryId { get; set; }
+        public int EbayCategoryId { get; set; } 
         public decimal PurchasedPrice { get; set; }
         public decimal SellPrice { get; set; }
         public string? Description { get; set; }

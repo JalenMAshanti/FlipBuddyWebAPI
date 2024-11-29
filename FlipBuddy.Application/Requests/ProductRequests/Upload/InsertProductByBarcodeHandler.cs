@@ -42,6 +42,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Upload
 																request.UserGuid,
 																product.items[0].title!,
 																DefaultValues.DefaultCategory,
+																DefaultValues.DefaultCategory,
 																product.items[0].offers[0].price,
 																product.items[0].offers[0].price * 2,
 																product.items[0].description!,

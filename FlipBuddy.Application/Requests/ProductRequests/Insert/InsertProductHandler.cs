@@ -31,6 +31,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 																	  request.UserGuid,
 																	  request.Title!,
 																	  request.CategoryId,
+																	  request.EbayCategoryId,
 																	  request.PurchasedPrice,
 																	  request.SellPrice,
 																	  request.Description!,

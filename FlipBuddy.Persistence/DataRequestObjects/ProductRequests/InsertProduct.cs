@@ -11,6 +11,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 					   Guid userGuid,
 					   string title,
 					   int categoryId,
+					   int ebayCategoryId,
 					   decimal purchasedPrice,
 					   decimal sellPrice,
 					   string description,
@@ -23,12 +24,14 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 			UserGuid = userGuid;
 			Title = title;
 			CategoryId = categoryId;
+			EbayCategoryId = ebayCategoryId;
 			PurchasedPrice = purchasedPrice;
 			SellPrice = sellPrice;
 			Description = description;
 			Quantity = quantity;
 			Currency = currency;
 			ConditionId = conditionId;
+			
 		}
 
 
@@ -36,6 +39,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 					   Guid userGuid,
 					   string title,
 					   int categoryId,
+					   int ebayCategoryId,
 					   decimal purchasedPrice,
 					   decimal sellPrice,
 					   string description,
@@ -49,6 +53,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 			UserGuid = userGuid;
 			Title = title;
 			CategoryId = categoryId;
+			EbayCategoryId = ebayCategoryId;
 			PurchasedPrice = purchasedPrice;
 			SellPrice = sellPrice;
 			Description = description;
@@ -62,6 +67,7 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 		public Guid? UserGuid { get; set; }
 		public string? Title { get; set; } = string.Empty;
 		public int CategoryId { get; set; }
+		public int EbayCategoryId { get; set; }
 		public decimal PurchasedPrice { get; set; }
 		public decimal SellPrice { get; set; }
 		public string? Description { get; set; } = string.Empty;
@@ -74,10 +80,9 @@ namespace FlipBuddy.Persistence.DataRequestObjects.ProductRequests
 
 		public string GetSql() => $@"
 									INSERT INTO {DatabaseTable.Products} 
-									(Guid, UserGuid, Title, CategoryId, PurchasedPrice, SellPrice, Description, Quantity, Currency, ConditionId, BarCode) 
+									(Guid, UserGuid, Title, CategoryId, EbayCategoryId, PurchasedPrice, SellPrice, Description, Quantity, Currency, ConditionId, BarCode) 
 									VALUES 
-									(@Guid, @UserGuid, @Title, @CategoryId, @PurchasedPrice, @SellPrice, @Description, @Quantity, @Currency, @ConditionId, @BarCode
-								  );";
+									(@Guid, @UserGuid, @Title, @CategoryId, @EbayCategoryId, @PurchasedPrice, @SellPrice, @Description, @Quantity, @Currency, @ConditionId, @BarCode);";
 		
 	}
 }

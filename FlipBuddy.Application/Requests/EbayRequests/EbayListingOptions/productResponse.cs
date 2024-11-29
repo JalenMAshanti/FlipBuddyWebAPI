@@ -5,6 +5,7 @@
         public string productGuid { get; set; } = string.Empty;
         public string title { get; set; } = string.Empty;
         public int categoryId { get; set; }
+        public int ebayCategoryId { get; set; }
         public decimal purchasePrice { get; set; }
         public decimal sellPrice { get; set; }
         public string description { get; set; } = string.Empty;

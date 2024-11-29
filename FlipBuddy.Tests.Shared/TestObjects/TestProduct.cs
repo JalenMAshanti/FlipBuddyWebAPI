@@ -18,6 +18,7 @@ namespace FlipBuddy.Tests.Shared.TestObjects
 															 userGuid,
 															 TestValues.ProductTitle,
 															 DefaultValues.DefaultCategory,
+															 DefaultValues.DefaultCategory,
 															 DefaultValues.TestPurchasePrice,
 															 DefaultValues.TestPurchasePrice * 2,
 															 TestString.Random(),
