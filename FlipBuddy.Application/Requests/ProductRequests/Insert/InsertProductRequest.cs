@@ -8,16 +8,17 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 	{
 		public InsertProductRequest() { }
 
-		public InsertProductRequest(Guid guid, 
-									Guid userGuid, 
-									string title, 
+		public InsertProductRequest(Guid guid,
+									Guid userGuid,
+									string title,
 									int categoryId,
 									decimal purchasedPrice,
 									decimal sellPrice,
 									string description,
 									int quantity,
 									int conditionId,
-									string barCode) 
+									string barCode,
+									List<InsertSpecific> specifics)
 		{
 			Guid = guid;
 			UserGuid = userGuid;
@@ -29,6 +30,7 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 			Quantity = quantity;
 			ConditionId = conditionId;
 			BarCode = barCode;
+			Specifics = specifics;
 		}
 
 		public Guid Guid { get; set; }
@@ -42,6 +44,9 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 		public string? Currency { get; set; }
 		public int ConditionId { get; set; }
 		public string? BarCode { get; set; }
+		public List<InsertSpecific>? Specifics { get; set; }
+
+
 
 
 		public bool IsValid(out Validator validator)
@@ -52,6 +57,18 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 			);
 
 			return validator.IsPassingAllRules;
+		}
+
+
+		public class InsertSpecific
+		{
+			public string? SpecificName { get; set; }
+			public List<InsertSpecificValue> SpecificValues { get; set; } = new List<InsertSpecificValue>();
+		}
+
+		public class InsertSpecificValue
+		{
+			public string? SpecificValue { get; set; }
 		}
 	}
 }
