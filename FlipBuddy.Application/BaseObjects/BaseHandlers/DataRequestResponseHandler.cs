@@ -8,7 +8,7 @@ namespace FlipBuddy.Application.BaseObjects.BaseHandlers
 	{
 		protected readonly IDataAccess _dataAccess;
 		protected readonly ExternalAPIService? _apiService;
-		protected readonly EbayAPIService? _ebayAPISerice;
+		protected readonly ExternalEbayAPIService? _ebayAPISerice;
 		protected DataRequestResponseHandler(IDataAccess dataAccess) => _dataAccess = dataAccess;
 
 		protected DataRequestResponseHandler(IDataAccess dataAccess, ExternalAPIService apiService)
@@ -17,7 +17,7 @@ namespace FlipBuddy.Application.BaseObjects.BaseHandlers
 			_apiService = apiService;
 		}
 
-		protected DataRequestResponseHandler(IDataAccess dataAccess, EbayAPIService ebayApiService)
+		protected DataRequestResponseHandler(IDataAccess dataAccess, ExternalEbayAPIService ebayApiService)
 		{
 			_dataAccess = dataAccess;
 			_ebayAPISerice = ebayApiService;
