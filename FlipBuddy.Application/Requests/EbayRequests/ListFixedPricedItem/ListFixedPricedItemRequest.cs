@@ -1,5 +1,5 @@
 ﻿using FlipBuddy.Application.Abstraction;
-using FlipBuddy.Domain.Models.Ebay.ListFixedPriceItem.Request;
+using FlipBuddy.Application.Requests.EbayRequests.EbayListingOptions;
 
 namespace FlipBuddy.Application.Requests.EbayRequests.ListFixedPricedItem
 {
@@ -7,13 +7,42 @@ namespace FlipBuddy.Application.Requests.EbayRequests.ListFixedPricedItem
     {
         public ListFixedPricedItemRequest() { }
 
-        public ListFixedPricedItemRequest(AddFixedPriceItemRequest listItemRequest, string token)
+        public ListFixedPricedItemRequest(productAndSpecificsResponse ProductAndSpecifics,
+                                          string ReturnsAccepted,
+                                          string ReturnsWithin,
+                                          string ReturnShippingCostPaidBy,
+                                          bool FreeShipping,
+                                          int ShippingServicePriority,
+                                          string ShippingService,
+                                          double AdditionalShippingCosts,
+                                          string Token)
         {
-            ListItemDetails = listItemRequest;
+
+            ProductAndSpecifics = productandSpecifics;
+            ReturnsAccepted = returnsAccepted;
+            ReturnsWithin = returnsWithin;
+            ReturnShippingCostPaidBy = returnShippingCostPaidBy;
+            FreeShipping = freeShipping;
+            ShippingServicePriority = shippingServicePriority;
+            ShippingService = shippingService;
+            AdditionalShippingCosts = additionalShippingCosts;
             Token = token;
         }
 
-        public AddFixedPriceItemRequest? ListItemDetails { get; set; }
-        public string Token { get; set; } = string.Empty;
+        //Product
+        public productAndSpecificsResponse productandSpecifics { get; set; }
+
+        //Return Settings
+        public string returnsAccepted { get; set; } = "ReturnsAccepted";
+        public string returnsWithin { get; set; } = "Days_30";
+        public string returnShippingCostPaidBy { get; set; } = "Buyer";
+
+
+        //Shipping Settings  
+        public bool freeShipping { get; set; } = true;
+        public int shippingServicePriority { get; set; } = 1;
+        public string shippingService { get; set; } = "UPSGround";
+        public double additionalShippingCosts { get; set; }
+        public string token { get; set; } = string.Empty;
     }
 }
