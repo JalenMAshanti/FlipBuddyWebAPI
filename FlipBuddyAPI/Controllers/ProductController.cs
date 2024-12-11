@@ -1,4 +1,5 @@
 ﻿using FlipBuddy.Application.Abstraction;
+using FlipBuddy.Application.Requests.ProductRequests.Delete;
 using FlipBuddy.Application.Requests.ProductRequests.GetByGuidAndUserGuid;
 using FlipBuddy.Application.Requests.ProductRequests.GetByUserGuid;
 using FlipBuddy.Application.Requests.ProductRequests.Insert;
@@ -36,7 +37,7 @@ namespace FlipBuddyAPI.Controllers
         public async Task UpdateProductByGuidAndUserGuid([FromBody] UpdateProductByGuidAndUserGuidRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
         [HttpDelete("Product/DeleteProductByProductGuid")]
-        //public async Task DeleteProductByProductGuid([FromQuery] Delet)
+        public async Task DeleteProductByProductGuid([FromQuery] DeleteProductByProductGuidRequest request) => await _orchestrator.ExecuteRequestAsync(request);
 
 
 
