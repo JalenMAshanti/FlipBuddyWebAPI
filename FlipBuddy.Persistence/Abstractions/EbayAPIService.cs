@@ -35,10 +35,10 @@ namespace FlipBuddy.Persistence.Abstractions
 						<Title>{body.Item.Title}</Title>
 						<Description>{body.Item.Description}</Description>
 						<PrimaryCategory>
-							<CategoryID>9355</CategoryID>
+							<CategoryID>{body.Item.PrimaryCategory.CategoryID}</CategoryID>
 						</PrimaryCategory>
 						<StartPrice>{body.Item.StartPrice}</StartPrice>
-						<ConditionID>1000</ConditionID>
+						<ConditionID>{body.Item.ConditionID}</ConditionID>
 						<Country>{body.Item.Country}</Country>
 						<Currency>{body.Item.Currency}</Currency>
 						<DispatchTimeMax>1</DispatchTimeMax>
@@ -53,7 +53,9 @@ namespace FlipBuddy.Persistence.Abstractions
 							<UseFirstProduct>true</UseFirstProduct>
 							<ReturnSearchResultOnDuplicates>true</ReturnSearchResultOnDuplicates>
 						</ProductListingDetails>
-
+						
+							{EbayProductSpecificsToString(body.Item.ItemSpecifics)}
+						
 						<Quantity>{body.Item.Quantity}</Quantity>
 						<ReturnPolicy>
 							<ReturnsAcceptedOption>{body.Item.ReturnPolicy.ReturnsAcceptedOption}</ReturnsAcceptedOption>
@@ -99,14 +101,34 @@ namespace FlipBuddy.Persistence.Abstractions
 
 		public void EbayProductImagesUrlToString() 
 		{
-
-		}
-
-		public void EbayProductSpecificsToString() 
-		{
-						//< PictureDetails >
+				//< PictureDetails >
 						//	< PictureURL ></ PictureURL >
 						//</ PictureDetails >
 		}
-	}
+
+        public string EbayProductSpecificsToString(ItemSpecifics specifics)
+        {
+            using var stringWriter = new StringWriter();
+            var serializer = new System.Xml.Serialization.XmlSerializer(typeof(ItemSpecifics));
+
+            // Set up XmlWriter settings to omit the XML declaration
+            var settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true, // Removes the XML declaration
+                Indent = true             // Optional: makes the output more readable
+            };
+
+            // Use XmlSerializerNamespaces to remove namespace attributes
+            var namespaces = new System.Xml.Serialization.XmlSerializerNamespaces();
+            namespaces.Add("", ""); // Add an empty namespace
+
+            using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
+            {
+                serializer.Serialize(xmlWriter, specifics, namespaces);
+            }
+
+            var xmlString = stringWriter.ToString();
+            return xmlString;
+        }
+    }
 }
