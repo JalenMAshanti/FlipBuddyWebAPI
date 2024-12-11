@@ -55,11 +55,11 @@ namespace FlipBuddy.Application.Helpers
 
 					PrimaryCategory = new PrimaryCategory
 					{
-						CategoryID = 111422,
+						CategoryID = request.productandSpecifics.product.ebayCategoryId,
 					},
 
 					StartPrice = (double)request.productandSpecifics.product.sellPrice,
-					ConditionID = 1000,
+					ConditionID = request.productandSpecifics.product.conditionId,
 					Country = "US",
 					Currency = "USD",
 					DispatchTimeMax = 1,
