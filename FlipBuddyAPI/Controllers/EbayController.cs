@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlipBuddyAPI.Controllers
 {
 
-    [ApiController]
-    public class EbayController : BaseController
-    {
-        public EbayController(IOrchestrator orchestrator) : base(orchestrator)
-        {
-        }
+	[ApiController]
+	public class EbayController : BaseController
+	{
+		public EbayController(IOrchestrator orchestrator) : base(orchestrator)
+		{
+		}
 
-        [HttpPost("EbayController/ListItemFromInventory")]
-        public async Task ListItemToEbay(ListFixedPricedItemRequest request) => await _orchestrator.GetRequestResponseAsync(request);
-
-    }
+		[HttpPost("EbayController/ListItemFromInventory")]
+		public async Task<ListFixedPricedItemResponse> ListItemToEbay(ListFixedPricedItemRequest request) => await _orchestrator.GetRequestResponseAsync(request);
+	}
 }
 
