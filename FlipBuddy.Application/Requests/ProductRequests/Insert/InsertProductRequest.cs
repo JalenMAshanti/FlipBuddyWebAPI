@@ -12,18 +12,21 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 									Guid userGuid,
 									string title,
 									int categoryId,
+									int ebayCategoryId,
 									decimal purchasedPrice,
 									decimal sellPrice,
 									string description,
 									int quantity,
 									int conditionId,
 									string barCode,
-									List<InsertSpecific> specifics)
+									List<InsertSpecific> specifics
+									)
 		{
 			Guid = guid;
 			UserGuid = userGuid;
 			Title = title;
 			CategoryId = categoryId;
+			EbayCategoryId = ebayCategoryId;
 			PurchasedPrice = purchasedPrice;
 			SellPrice = sellPrice;
 			Description = description;
@@ -31,12 +34,45 @@ namespace FlipBuddy.Application.Requests.ProductRequests.Insert
 			ConditionId = conditionId;
 			BarCode = barCode;
 			Specifics = specifics;
+			
 		}
+
+
+
+		public InsertProductRequest(Guid guid,
+							Guid userGuid,
+							string title,
+							int categoryId,
+							int ebayCategoryId,
+							decimal purchasedPrice,
+							decimal sellPrice,
+							string description,
+							int quantity,
+							int conditionId,
+							string barCode			
+							)
+		{
+			Guid = guid;
+			UserGuid = userGuid;
+			Title = title;
+			CategoryId = categoryId;
+			EbayCategoryId = ebayCategoryId;
+			PurchasedPrice = purchasedPrice;
+			SellPrice = sellPrice;
+			Description = description;
+			Quantity = quantity;
+			ConditionId = conditionId;
+			BarCode = barCode;
+		}
+
+
+
 
 		public Guid Guid { get; set; }
 		public Guid UserGuid { get; set; }
 		public string? Title { get; set; }
 		public int CategoryId { get; set; }
+		public int EbayCategoryId { get; set; }
 		public decimal PurchasedPrice { get; set; }
 		public decimal SellPrice { get; set; }
 		public string? Description { get; set; }
