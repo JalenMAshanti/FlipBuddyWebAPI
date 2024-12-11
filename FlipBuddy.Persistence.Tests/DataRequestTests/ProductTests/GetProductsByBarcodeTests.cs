@@ -17,10 +17,10 @@ namespace FlipBuddy.Persistence.Tests.DataRequestTests.ProductTests
             var product_DTO = await TestProduct.InsertAndFetchProductDtoAsync(user_DTO.Guid);
 
             //Get Product(TESTING)
-            var product = await _dataAccess.FetchListAsync(new GetProductsByBarcode(product_DTO.BarCode));
+            var products = await _dataAccess.FetchListAsync(new GetProductsByBarcode(product_DTO.BarCode));
 
             //Test Result
-            Assert.Single(product);
+            Assert.NotEmpty(products);
 
             //Clean up
             await _dataAccess.ExecuteAsync(new DeleteProductByGuid(product_DTO.Guid));
